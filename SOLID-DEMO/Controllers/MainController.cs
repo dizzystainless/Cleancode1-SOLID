@@ -13,6 +13,7 @@ namespace Server.Controllers;
 public class MainController : ControllerBase
 {
     private readonly ICustomer _customer;
+    
 
     public MainController(ICustomer customer)
     {
@@ -43,53 +44,30 @@ public class MainController : ControllerBase
         return Ok();
     }
 
-    //    [HttpPost("/customers/login")]
-    //    public async Task<IActionResult> LoginCustomer(string email, string password)
-    //    {
-    //        var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email) && c.Password.Equals(password));
-    //        if (customer is not null)
-    //        {
-    //            return Ok();
-    //        }
-    //        return BadRequest();
-    //    }
+    [HttpPost("/customers/login")]
+    public async Task<IActionResult> LoginCustomer(string email, string password)
+    {
+        var customer = await _customer.LoginCustomerAsync(email, password);
+        if (customer is not null)
+        {
+            return Ok();
+        }
+        return BadRequest();
+    }
 
-    //    [HttpDelete("/customers/delete/{id}")]
-    //    public async Task<IActionResult> DeleteCustomer(int id)
-    //    {
-    //        var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id == id);
-    //        if (customer is null) return BadRequest();
+    [HttpDelete("/customers/delete/{id}")]
+    public async Task<IActionResult> DeleteCustomer(int id)
+    {
+        var customer = await _customer.GetCustomerByIdAsync(id); ;
+        if (customer is null) return BadRequest();
 
-    //        _shopContext.Customers.Remove(customer);
-    //        await _shopContext.SaveChangesAsync();
-    //        return Ok();
-    //    }
+        await _customer.DeleteCustomerAsync(customer);
+        //_shopContext.Customers.Remove(customer);
+        //await _shopContext.SaveChangesAsync();
+        return Ok();
+    }
 
-    //    [HttpGet("/products")]
-    //    public async Task<IActionResult> GetProducts()
-    //    {
-    //        return Ok(await _shopContext.Products.ToListAsync());
-    //    }
-
-    //    [HttpGet("/products/{id}")]
-    //    public async Task<IActionResult> GetProduct(int id)
-    //    {
-    //        return Ok(await _shopContext.Products.FirstOrDefaultAsync(c => c.Name.Equals(id)));
-    //    }
-
-    //    [HttpPost("/products")]
-    //    public async Task<IActionResult> AddProduct(Product newProd)
-    //    {
-    //        var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Name.Equals(newProd.Name));
-    //        if (prod == null)
-    //        {
-    //            await _shopContext.Products.AddAsync(newProd);
-    //            await _shopContext.SaveChangesAsync();
-    //            return Ok();
-    //        }
-
-    //        return BadRequest();
-    //    }
+    
 
     //    [HttpGet("/orders")]
     //    public async Task<IActionResult> GetAllOrders()

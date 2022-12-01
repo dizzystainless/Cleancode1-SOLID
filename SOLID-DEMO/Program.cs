@@ -14,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICustomer, CustomerService>();
+builder.Services.AddScoped<IProduct, ProductService>();
 
 builder.Services.AddDbContext<ShopContext>(options =>
 {
