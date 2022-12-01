@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Interfaces;
+using Shared;
 
 namespace Server.Controllers
 {
@@ -20,25 +21,27 @@ namespace Server.Controllers
             return Ok(products);
         }
 
-        //[HttpGet("/products/{id}")]
-        //public async Task<IActionResult> GetProduct(int id)
-        //{
-        //    return Ok(await _shopContext.Products.FirstOrDefaultAsync(c => c.Name.Equals(id)));
-        //}
+        [HttpGet("/products/{id}")]
+        public async Task<IActionResult> GetProduct(int id)
+        {
+           var product = await _product.GetProductByIdAsync(id);
+           if (product is null) return NotFound($"No product found with id: {id}");
+           return Ok(product);
+        }
 
-        //    [HttpPost("/products")]
-        //    public async Task<IActionResult> AddProduct(Product newProd)
-        //    {
-        //        var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Name.Equals(newProd.Name));
-        //        if (prod == null)
-        //        {
-        //            await _shopContext.Products.AddAsync(newProd);
-        //            await _shopContext.SaveChangesAsync();
-        //            return Ok();
-        //        }
-
-        //        return BadRequest();
-        //    }
+        [HttpPost("/products")]
+        public async Task<IActionResult> AddProduct(Product newProd)
+        {
+            var prod = await _product.GetNewProductByNameAsync(newProd);
+            if (prod == null)
+            {
+                await _product.AddProductAsync(newProd);
+                //await _shopContext.Products.AddAsync(newProd);
+                //await _shopContext.SaveChangesAsync();
+                return Ok();
+            }
+            return BadRequest();
+        }
 
 
     }
