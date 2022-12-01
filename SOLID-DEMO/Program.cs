@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICustomer, CustomerService>();
 builder.Services.AddScoped<IProduct, ProductService>();
+builder.Services.AddScoped<IOrder, OrderService>();
 
 builder.Services.AddDbContext<ShopContext>(options =>
 {

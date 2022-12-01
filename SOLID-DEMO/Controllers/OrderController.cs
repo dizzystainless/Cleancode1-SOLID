@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.Interfaces;
+using Shared;
 
 namespace Server.Controllers
 {
@@ -10,56 +12,54 @@ namespace Server.Controllers
             _order = order;
         }
 
+        [HttpGet("/orders")]
+        public async Task<IActionResult> GetAllOrders()
+        {
+            var orders = await _order.GetAllOrderssAsync();
+            return Ok(orders);
+        }
 
+        [HttpGet("/orders/customer/{id}")]
+        public async Task<IActionResult> GetOrdersForCustomer(int id)
+        {
+            var orders = await _order.GetOrdersForCustomerAsync(id);
+            if (orders.Count == 0)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
+        }
 
-        //    [HttpGet("/orders")]
-        //    public async Task<IActionResult> GetAllOrders()
-        //    {
-        //        var orders = await _shopContext.Orders.Include(o=> o.Customer).Include(o=>o.Products).ToListAsync();
-        //        return Ok(orders);
-        //    }
+        [HttpPost("/orders")]
+        public async Task<IActionResult> PlaceOrder(CustomerCart cart)
+        {
+            var customer = await _order.GetCustomerCart(cart);
+            if (customer is null)
+            {
+                return BadRequest();
+            }
 
-        //    [HttpGet("/orders/customer/{id}")]
-        //    public async Task<IActionResult> GetOrdersForCustomer(int id)
-        //    {
-        //        var orders = await _shopContext.Orders.Include(o=>o.Customer).Where(c=> c.Customer.Id == id).Include(o=>o.Products).ToListAsync();
-        //        if (orders.Count == 0)
-        //        {
-        //            return NotFound();
-        //        }
-        //        return Ok(orders);
-        //    }
+            //var products = new List<Product>();
 
-        //    [HttpPost("/orders")]
-        //    public async Task<IActionResult> PlaceOrder(CustomerCart cart)
-        //    {
-        //        var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(cart.CustomerId));
-        //        if (customer is null)
-        //        {
-        //            return BadRequest();
-        //        }
+            //foreach (var prodId in cart.ProductIds)
+            //{
+            //    var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+            //    if (prod is null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    products.Add(prod);
+            //}
 
-        //        var products = new List<Product>();
+            //var order = new Order() { Customer = customer, Products = products };
+            //var now = DateTime.Now;
+            //order.ShippingDate = now.AddDays(5);
 
-        //        foreach (var prodId in cart.ProductIds)
-        //        {
-        //            var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-        //            if (prod is null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            products.Add(prod);
-        //        }
+            //await _shopContext.Orders.AddAsync(order);
+            //await _shopContext.SaveChangesAsync();
 
-        //        var order = new Order() {Customer = customer, Products = products};
-        //        var now = DateTime.Now;
-        //        order.ShippingDate = now.AddDays(5);
-
-        //        await _shopContext.Orders.AddAsync(order);
-        //        await _shopContext.SaveChangesAsync();
-
-        //        return Ok();
-        //    }
+            return Ok();
+        }
 
         //    [HttpDelete("/orders/{id}")]
         //    public async Task<IActionResult> CancelOrder(int id)
