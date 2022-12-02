@@ -33,25 +33,28 @@ namespace Server.Controllers
         [HttpPost("/orders")]
         public async Task<IActionResult> PlaceOrder(CustomerCart cart)
         {
-            var customer = await _order.GetCustomerCart(cart);
+            var customer = await _order.GetCustomerCartAsync(cart);
             if (customer is null)
             {
                 return BadRequest();
             }
 
-            var products = new List<Product>();
+            //var products = new List<Product>();
 
-            foreach (var prodId in cart.ProductIds)
-            {
-                //var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-                if (prod is null)
-                {
-                    return NotFound();
-                }
-                products.Add(prod);
-            }
+            //foreach (var prodId in cart.ProductIds)
+            //{
+            //    //var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+            //    if (prod is null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    products.Add(prod);
+            //}
+            var products = await _order.AddProductsForCartAsync(cart);
 
-            //var order = new Order() { Customer = customer, Products = products };
+            var order = new Order() { Customer = customer, Products = products };
+
+            var createOrder = await _order.CreateOrderAsync(order);
             //var now = DateTime.Now;
             //order.ShippingDate = now.AddDays(5);
 

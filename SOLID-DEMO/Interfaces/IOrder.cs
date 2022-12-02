@@ -6,6 +6,8 @@ namespace Server.Interfaces
     {
         public Task<List<Order>> GetAllOrderssAsync();
         public Task<List<Order>> GetOrdersForCustomerAsync(int id);
-        public Task<Customer> GetCustomerCart(CustomerCart cart);
+        public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
+        public Task<List<Product>> AddProductsForCartAsync(CustomerCart cart);
+        public Task<Order> CreateOrderAsync(Order order);
     }
 }
