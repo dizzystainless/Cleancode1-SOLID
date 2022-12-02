@@ -31,5 +31,7 @@ namespace Server.Services
             var customerCart = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(cart.CustomerId));
             return customerCart;
         }
+
+
     }
 }

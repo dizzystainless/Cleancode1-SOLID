@@ -39,17 +39,17 @@ namespace Server.Controllers
                 return BadRequest();
             }
 
-            //var products = new List<Product>();
+            var products = new List<Product>();
 
-            //foreach (var prodId in cart.ProductIds)
-            //{
-            //    var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-            //    if (prod is null)
-            //    {
-            //        return NotFound();
-            //    }
-            //    products.Add(prod);
-            //}
+            foreach (var prodId in cart.ProductIds)
+            {
+                //var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+                if (prod is null)
+                {
+                    return NotFound();
+                }
+                products.Add(prod);
+            }
 
             //var order = new Order() { Customer = customer, Products = products };
             //var now = DateTime.Now;
