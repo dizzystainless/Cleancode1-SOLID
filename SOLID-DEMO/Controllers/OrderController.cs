@@ -97,11 +97,14 @@ namespace Server.Controllers
             //    }
             //    products.Add(prod);
             //}
+            var products = await _order.GetProductsToAddToExistingOrderAsync(itemsToAdd);
 
-            //        var order = await _shopContext.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _order.GetOrderToAddProductsToAsync(id);
+
             //        order.ShippingDate = DateTime.Now.AddDays(5);
             //        order.Products.AddRange(products);
             //        await _shopContext.SaveChangesAsync();
+            await _order.AddToOrderAsync(order, products);
 
             return Ok();
         }

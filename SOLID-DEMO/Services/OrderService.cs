@@ -77,6 +77,35 @@ namespace Server.Services
             return customer;
         }
 
+        public async Task<List<Product>> GetProductsToAddToExistingOrderAsync(CustomerCart itemsToAdd)
+        {
+            var products = new List<Product>();
+
+            foreach (var prodId in itemsToAdd.ProductIds)
+            {
+                var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+                //if (prod is null)
+                //{
+                //    return NotFound();
+                //}
+                products.Add(prod);
+            }
+            return products;
+        }
+
+        public async Task<Order> GetOrderToAddProductsToAsync(int id)
+        {
+            var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            return order;
+        }
+
+        public async Task AddToOrderAsync(Order order, List<Product> products)
+        {
+            order.ShippingDate = DateTime.Now.AddDays(5);
+            order.Products.AddRange(products);
+            await _context.SaveChangesAsync();
+        }
+
 
     }
 }

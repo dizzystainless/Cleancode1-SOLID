@@ -12,5 +12,8 @@ namespace Server.Interfaces
         public Task<Order> GetOrderByIdAsync(int id);
         public Task CancelOrderAsync(Order order);
         public Task<Customer> GetCustomerByItemsToAddAsync(CustomerCart itemsToAdd, int id);
+        public Task<List<Product>> GetProductsToAddToExistingOrderAsync(CustomerCart itemsToAdd);
+        public Task<Order> GetOrderToAddProductsToAsync(int id);
+        public Task AddToOrderAsync(Order order, List<Product> products);
     }
 }
