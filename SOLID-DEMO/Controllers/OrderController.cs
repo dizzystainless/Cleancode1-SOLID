@@ -109,32 +109,36 @@ namespace Server.Controllers
             return Ok();
         }
 
-        //    [HttpPatch("order/remove/{id}")]
-        //    public async Task<IActionResult> RemoveFromOrder(CustomerCart itemsToRemove, int id)
-        //    {
-        //        var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
-        //        if (customer is null)
-        //        {
-        //            return BadRequest();
-        //        }
+        [HttpPatch("order/remove/{id}")]
+        public async Task<IActionResult> RemoveFromOrder(CustomerCart itemsToRemove, int id)
+        {
+            //var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
+            var customer = await _order.GetCustomerToRemoveFromOrderAsync(itemsToRemove, id);
+            if (customer is null)
+            {
+                return BadRequest();
+            }
 
-        //        var order = await _shopContext.Orders.Include(o => o.Customer.Id == customer.Id).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
-        //        order.ShippingDate = DateTime.Now.AddDays(5);
+            //var order = await _shopContext.Orders.Include(o => o.Customer.Id == customer.Id).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _order.GetOrderToRemoveItemsFromAsync(id);
 
-        //        foreach (var prodId in itemsToRemove.ProductIds)
-        //        {
-        //            var prod =  order.Products.FirstOrDefault(p => p.Id == prodId);
-        //            if (prod is null)
-        //            {
-        //                continue;
-        //            }
-        //            order.Products.Remove(prod);
-        //        }
+            //order.ShippingDate = DateTime.Now.AddDays(5);
 
-        //        await _shopContext.SaveChangesAsync();
+            //foreach (var prodId in itemsToRemove.ProductIds)
+            //{
+            //    var prod = order.Products.FirstOrDefault(p => p.Id == prodId);
+            //    if (prod is null)
+            //    {
+            //        continue;
+            //    }
+            //    order.Products.Remove(prod);
+            //}
 
-        //        return Ok();
-        //    }
+            await _order.RemoveProductFromOrderAsync(itemsToRemove, order);
+            //await _shopContext.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
 

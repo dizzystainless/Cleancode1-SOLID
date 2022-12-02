@@ -106,6 +106,32 @@ namespace Server.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Customer> GetCustomerToRemoveFromOrderAsync (CustomerCart itemsToRemove, int id)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
+            return customer;
+        }
+
+        public async Task<Order> GetOrderToRemoveItemsFromAsync(int id)
+        {
+            var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            return order;
+        }
+
+        public async Task RemoveProductFromOrderAsync(CustomerCart itemsToRemove, Order order)
+        {
+            foreach (var prodId in itemsToRemove.ProductIds)
+            {
+                var prod = order.Products.FirstOrDefault(p => p.Id == prodId);
+                if (prod is null)
+                {
+                    continue;
+                }
+                order.Products.Remove(prod);
+            }
+            await _context.SaveChangesAsync();
+        }
+
 
     }
 }

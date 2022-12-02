@@ -10,12 +10,12 @@ namespace Server.Controllers;
 
 [ApiController]
 [Route("/api")]
-public class MainController : ControllerBase
+public class CustomerController : ControllerBase
 {
     private readonly ICustomer _customer;
     
 
-    public MainController(ICustomer customer)
+    public CustomerController(ICustomer customer)
     {
         _customer = customer;
     }
