@@ -6,9 +6,9 @@ namespace Server.Interfaces
     {
         Task<List<Customer>> GetAllCustomersAsync();
         Task<Customer> GetCustomerByEmailAsync(string email);
-        Task AddUser(Customer customer);
-        Task <Customer> LoginCustomerAsync(string email, string password);
         Task<Customer> GetCustomerByIdAsync(int id);
+        Task RegisterCustomerAsync(Customer customer);
+        Task <Customer> LoginCustomerAsync(string email, string password);      
         Task DeleteCustomerAsync(Customer customer);
 
     }

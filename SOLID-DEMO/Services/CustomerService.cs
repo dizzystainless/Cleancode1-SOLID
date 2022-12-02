@@ -26,8 +26,13 @@ namespace Server.Services
             return customer;
         }
 
-        //byta namn på denna nedan?
-        public async Task AddUser(Customer customer)
+        public async Task<Customer> GetCustomerByIdAsync(int id)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+            return customer;
+        }
+
+        public async Task RegisterCustomerAsync(Customer customer)
         {
             await _context.AddAsync(customer);
             await _context.SaveChangesAsync();
@@ -39,20 +44,10 @@ namespace Server.Services
             return customer;
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(int id)
-        {
-            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
-            return customer;
-        }
-
         public async Task DeleteCustomerAsync(Customer customer)
         {
             _context.Customers.Remove(customer);
             await _context.SaveChangesAsync();
-
         }
-
-
     }
-
 }
