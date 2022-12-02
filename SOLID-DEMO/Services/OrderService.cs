@@ -59,6 +59,24 @@ namespace Server.Services
             return order;
         }
 
+        public async Task <Order> GetOrderByIdAsync(int id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            return order;
+        }
+
+        public async Task CancelOrderAsync(Order order)
+        {
+            _context.Orders.Remove(order);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Customer> GetCustomerByItemsToAddAsync(CustomerCart itemsToAdd, int id)
+        {
+            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
+            return customer;
+        }
+
 
     }
 }

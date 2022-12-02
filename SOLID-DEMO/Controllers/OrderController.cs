@@ -54,7 +54,7 @@ namespace Server.Controllers
 
             var order = new Order() { Customer = customer, Products = products };
 
-            var createOrder = await _order.CreateOrderAsync(order);
+            await _order.CreateOrderAsync(order);
             //var now = DateTime.Now;
             //order.ShippingDate = now.AddDays(5);
 
@@ -64,48 +64,47 @@ namespace Server.Controllers
             return Ok();
         }
 
-        //    [HttpDelete("/orders/{id}")]
-        //    public async Task<IActionResult> CancelOrder(int id)
-        //    {
-        //        var order = await _shopContext.Orders.FirstOrDefaultAsync(o => o.Id == id);
-        //        if (order is null)
-        //        {
-        //            return NotFound();
-        //        }
+        [HttpDelete("/orders/{id}")]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+            var order = await _order.GetOrderByIdAsync(id);
+            if (order is null)
+            {
+                return NotFound();
+            }
+            await _order.CancelOrderAsync(order);
+            return Ok();
+        }
 
-        //        _shopContext.Orders.Remove(order);
-        //        await _shopContext.SaveChangesAsync();
-        //        return Ok();
-        //    }
+        [HttpPatch("order/add/{id}")]
+        public async Task<IActionResult> AddToOrder(CustomerCart itemsToAdd, int id)
+        {
+            //var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
+            var customer = await _order.GetCustomerByItemsToAddAsync(itemsToAdd, id);
+            if (customer is null)
+            {
+                return BadRequest();
+            }
 
-        //    [HttpPatch("order/add/{id}")]
-        //    public async Task<IActionResult> AddToOrder(CustomerCart itemsToAdd, int id)
-        //    {
-        //        var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
-        //        if (customer is null)
-        //        {
-        //            return BadRequest();
-        //        }
+            //var products = new List<Product>();
 
-        //        var products = new List<Product>();
+            //foreach (var prodId in itemsToAdd.ProductIds)
+            //{
+            //    var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+            //    if (prod is null)
+            //    {
+            //        return NotFound();
+            //    }
+            //    products.Add(prod);
+            //}
 
-        //        foreach (var prodId in itemsToAdd.ProductIds)
-        //        {
-        //            var prod = await _shopContext.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-        //            if (prod is null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            products.Add(prod);
-        //        }
+            //        var order = await _shopContext.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            //        order.ShippingDate = DateTime.Now.AddDays(5);
+            //        order.Products.AddRange(products);
+            //        await _shopContext.SaveChangesAsync();
 
-        //        var order = await _shopContext.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
-        //        order.ShippingDate = DateTime.Now.AddDays(5);
-        //        order.Products.AddRange(products);
-        //        await _shopContext.SaveChangesAsync();
-
-        //        return Ok();
-        //    }
+            return Ok();
+        }
 
         //    [HttpPatch("order/remove/{id}")]
         //    public async Task<IActionResult> RemoveFromOrder(CustomerCart itemsToRemove, int id)
