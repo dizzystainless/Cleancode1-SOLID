@@ -23,12 +23,13 @@ namespace Server.Services
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(c => c.Name.Equals(id));
+            var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
             return product;
         }
 
         public async Task<Product> GetNewProductByNameAsync(Product newProd)
         {
+            //Döpa om till newProduct?
             var prod = await _context.Products.FirstOrDefaultAsync(p => p.Name.Equals(newProd.Name));
             return prod;
         }
