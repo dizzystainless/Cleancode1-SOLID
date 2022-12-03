@@ -5,18 +5,22 @@ namespace Server.Interfaces
     public interface IOrder
     {
         public Task<List<Order>> GetAllOrderssAsync();
-        public Task<List<Order>> GetOrdersForCustomerAsync(int id);
-        public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
-        public Task<List<Product>> AddProductsForCartAsync(CustomerCart cart);
-        public Task<Order> CreateOrderAsync(Order order);
         public Task<Order> GetOrderByIdAsync(int id);
+        public Task<List<Order>> GetOrdersByCustomerAsync(int id);
+        public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
+        public Task<List<Product>> AddToCartAsync(CustomerCart cart);
+        public Task<Order> CreateOrderAsync(Order order);    
         public Task CancelOrderAsync(Order order);
-        public Task<Customer> GetCustomerByItemsToAddAsync(CustomerCart itemsToAdd, int id);
-        public Task<List<Product>> GetProductsToAddToExistingOrderAsync(CustomerCart itemsToAdd);
-        public Task<Order> GetOrderToAddProductsToAsync(int id);
+
+        //Add to order
+        public Task<Customer> GetCustomerForItemsToAddAsync(CustomerCart itemsToAdd, int id);
+        public Task<List<Product>> GetItemsToAddAsync(CustomerCart itemsToAdd);
+        public Task<Order> GetOrderToAddItemsAsync(int id);
         public Task AddToOrderAsync(Order order, List<Product> products);
-        public Task<Customer> GetCustomerToRemoveFromOrderAsync(CustomerCart itemsToRemove, int id);
-        public Task<Order> GetOrderToRemoveItemsFromAsync(int id);
-        public Task RemoveProductFromOrderAsync(CustomerCart itemsToRemove, Order order);
+
+        //Remove from order
+        public Task<Customer> GetCustomerForItemsToRemoveAsync(CustomerCart itemsToRemove, int id);
+        public Task<Order> GetOrderToRemoveItemsAsync(int id);
+        public Task RemoveFromOrderAsync(CustomerCart itemsToRemove, Order order);
     }
 }

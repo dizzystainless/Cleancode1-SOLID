@@ -22,7 +22,7 @@ namespace Server.Controllers
         [HttpGet("/orders/customer/{id}")]
         public async Task<IActionResult> GetOrdersForCustomer(int id)
         {
-            var orders = await _order.GetOrdersForCustomerAsync(id);
+            var orders = await _order.GetOrdersByCustomerAsync(id);
             if (orders.Count == 0)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace Server.Controllers
             //    }
             //    products.Add(prod);
             //}
-            var products = await _order.AddProductsForCartAsync(cart);
+            var products = await _order.AddToCartAsync(cart);
 
             var order = new Order() { Customer = customer, Products = products };
 
@@ -80,7 +80,7 @@ namespace Server.Controllers
         public async Task<IActionResult> AddToOrder(CustomerCart itemsToAdd, int id)
         {
             //var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
-            var customer = await _order.GetCustomerByItemsToAddAsync(itemsToAdd, id);
+            var customer = await _order.GetCustomerForItemsToAddAsync(itemsToAdd, id);
             if (customer is null)
             {
                 return BadRequest();
@@ -97,9 +97,9 @@ namespace Server.Controllers
             //    }
             //    products.Add(prod);
             //}
-            var products = await _order.GetProductsToAddToExistingOrderAsync(itemsToAdd);
+            var products = await _order.GetItemsToAddAsync(itemsToAdd);
 
-            var order = await _order.GetOrderToAddProductsToAsync(id);
+            var order = await _order.GetOrderToAddItemsAsync(id);
 
             //        order.ShippingDate = DateTime.Now.AddDays(5);
             //        order.Products.AddRange(products);
@@ -113,14 +113,14 @@ namespace Server.Controllers
         public async Task<IActionResult> RemoveFromOrder(CustomerCart itemsToRemove, int id)
         {
             //var customer = await _shopContext.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
-            var customer = await _order.GetCustomerToRemoveFromOrderAsync(itemsToRemove, id);
+            var customer = await _order.GetCustomerForItemsToRemoveAsync(itemsToRemove, id);
             if (customer is null)
             {
                 return BadRequest();
             }
 
             //var order = await _shopContext.Orders.Include(o => o.Customer.Id == customer.Id).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
-            var order = await _order.GetOrderToRemoveItemsFromAsync(id);
+            var order = await _order.GetOrderToRemoveItemsAsync(id);
 
             //order.ShippingDate = DateTime.Now.AddDays(5);
 
@@ -134,7 +134,7 @@ namespace Server.Controllers
             //    order.Products.Remove(prod);
             //}
 
-            await _order.RemoveProductFromOrderAsync(itemsToRemove, order);
+            await _order.RemoveFromOrderAsync(itemsToRemove, order);
             //await _shopContext.SaveChangesAsync();
 
             return Ok();

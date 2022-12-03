@@ -20,7 +20,7 @@ namespace Server.Services
             return orders;
         }
 
-        public async Task<List<Order>> GetOrdersForCustomerAsync(int id)
+        public async Task<List<Order>> GetOrdersByCustomerAsync(int id)
         {
             var orders = await _context.Orders.Include(o => o.Customer).Where(c => c.Customer.Id == id).Include(o => o.Products).ToListAsync();
             return orders;
@@ -32,7 +32,7 @@ namespace Server.Services
             return customerCart;
         }
 
-        public async Task<List<Product>> AddProductsForCartAsync(CustomerCart cart)
+        public async Task<List<Product>> AddToCartAsync(CustomerCart cart)
         {
             var products = new List<Product>();
 
@@ -71,13 +71,13 @@ namespace Server.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Customer> GetCustomerByItemsToAddAsync(CustomerCart itemsToAdd, int id)
+        public async Task<Customer> GetCustomerForItemsToAddAsync(CustomerCart itemsToAdd, int id)
         {
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
             return customer;
         }
 
-        public async Task<List<Product>> GetProductsToAddToExistingOrderAsync(CustomerCart itemsToAdd)
+        public async Task<List<Product>> GetItemsToAddAsync(CustomerCart itemsToAdd)
         {
             var products = new List<Product>();
 
@@ -93,7 +93,7 @@ namespace Server.Services
             return products;
         }
 
-        public async Task<Order> GetOrderToAddProductsToAsync(int id)
+        public async Task<Order> GetOrderToAddItemsAsync(int id)
         {
             var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
             return order;
@@ -106,19 +106,19 @@ namespace Server.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Customer> GetCustomerToRemoveFromOrderAsync (CustomerCart itemsToRemove, int id)
+        public async Task<Customer> GetCustomerForItemsToRemoveAsync (CustomerCart itemsToRemove, int id)
         {
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
             return customer;
         }
 
-        public async Task<Order> GetOrderToRemoveItemsFromAsync(int id)
+        public async Task<Order> GetOrderToRemoveItemsAsync(int id)
         {
             var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
             return order;
         }
 
-        public async Task RemoveProductFromOrderAsync(CustomerCart itemsToRemove, Order order)
+        public async Task RemoveFromOrderAsync(CustomerCart itemsToRemove, Order order)
         {
             foreach (var prodId in itemsToRemove.ProductIds)
             {
@@ -131,7 +131,5 @@ namespace Server.Services
             }
             await _context.SaveChangesAsync();
         }
-
-
     }
 }
