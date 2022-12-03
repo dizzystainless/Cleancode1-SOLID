@@ -15,7 +15,7 @@ namespace Server.Controllers
         [HttpGet("/orders")]
         public async Task<IActionResult> GetAllOrders()
         {
-            var orders = await _order.GetAllOrderssAsync();
+            var orders = await _order.GetAllOrdersAsync();
             return Ok(orders);
         }
 
@@ -69,7 +69,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
             var products = await _order.GetItemsToAddAsync(itemsToAdd);
-            var order = await _order.GetOrderByCustomer(id);
+            var order = await _order.GetOrderByCustomerAsync(id);
             await _order.AddToOrderAsync(order, products);
             return Ok();
         }
@@ -83,7 +83,7 @@ namespace Server.Controllers
             {
                 return BadRequest();
             }
-            var order = await _order.GetOrderByCustomer(id);
+            var order = await _order.GetOrderByCustomerAsync(id);
             await _order.RemoveFromOrderAsync(itemsToRemove, order);
             return Ok();
         }

@@ -14,7 +14,7 @@ namespace Server.Services
             _context = context;
         }
 
-        public async Task<List<Order>> GetAllOrderssAsync()
+        public async Task<List<Order>> GetAllOrdersAsync()
         {
             var orders = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).ToListAsync();
             return orders;
@@ -32,7 +32,7 @@ namespace Server.Services
             return orders;
         }
 
-        public async Task<Order> GetOrderByCustomer(int id)
+        public async Task<Order> GetOrderByCustomerAsync(int id)
         {
             var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
             return order;

@@ -4,10 +4,10 @@ namespace Server.Interfaces
 {
     public interface IOrder
     {
-        public Task<List<Order>> GetAllOrderssAsync();
+        public Task<List<Order>> GetAllOrdersAsync();
         public Task<Order> GetOrderByIdAsync(int id);
         public Task<List<Order>> GetOrdersByCustomerAsync(int id);
-        public Task<Order> GetOrderByCustomer(int id);
+        public Task<Order> GetOrderByCustomerAsync(int id);
         public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
         public Task<List<Product>> AddToCartAsync(CustomerCart cart);
         public Task<Order> CreateOrderAsync(Order order);    
