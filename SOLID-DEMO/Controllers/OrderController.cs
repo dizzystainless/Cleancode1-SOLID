@@ -69,7 +69,7 @@ namespace Server.Controllers
                 return BadRequest();
             }
             var products = await _order.GetItemsToAddAsync(itemsToAdd);
-            var order = await _order.GetOrderToAddItemsAsync(id);
+            var order = await _order.GetOrderByCustomer(id);
             await _order.AddToOrderAsync(order, products);
             return Ok();
         }
@@ -83,7 +83,7 @@ namespace Server.Controllers
             {
                 return BadRequest();
             }
-            var order = await _order.GetOrderToRemoveItemsAsync(id);
+            var order = await _order.GetOrderByCustomer(id);
             await _order.RemoveFromOrderAsync(itemsToRemove, order);
             return Ok();
         }

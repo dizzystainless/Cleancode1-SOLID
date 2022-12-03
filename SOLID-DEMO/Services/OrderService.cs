@@ -20,10 +20,22 @@ namespace Server.Services
             return orders;
         }
 
+        public async Task<Order> GetOrderByIdAsync(int id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            return order;
+        }
+
         public async Task<List<Order>> GetOrdersByCustomerAsync(int id)
         {
             var orders = await _context.Orders.Include(o => o.Customer).Where(c => c.Customer.Id == id).Include(o => o.Products).ToListAsync();
             return orders;
+        }
+
+        public async Task<Order> GetOrderByCustomer(int id)
+        {
+            var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            return order;
         }
 
         public async Task<Customer> GetCustomerCartAsync(CustomerCart cart)
@@ -53,12 +65,6 @@ namespace Server.Services
             return order;
         }
 
-        public async Task <Order> GetOrderByIdAsync(int id)
-        {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
-            return order;
-        }
-
         public async Task CancelOrderAsync(Order order)
         {
             _context.Orders.Remove(order);
@@ -83,12 +89,6 @@ namespace Server.Services
             return products;
         }
 
-        public async Task<Order> GetOrderToAddItemsAsync(int id)
-        {
-            var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
-            return order;
-        }
-
         public async Task AddToOrderAsync(Order order, List<Product> products)
         {
             order.ShippingDate = DateTime.Now.AddDays(5);
@@ -100,12 +100,6 @@ namespace Server.Services
         {
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
             return customer;
-        }
-
-        public async Task<Order> GetOrderToRemoveItemsAsync(int id)
-        {
-            var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
-            return order;
         }
 
         public async Task RemoveFromOrderAsync(CustomerCart itemsToRemove, Order order)
