@@ -39,10 +39,6 @@ namespace Server.Services
             foreach (var prodId in cart.ProductIds)
             {
                 var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-                //if (prod is null)
-                //{
-                //    return;
-                //}
                 products.Add(prod);
             }
             return products;
@@ -50,10 +46,8 @@ namespace Server.Services
 
         public async Task<Order> CreateOrderAsync(Order order)
         {
-            //var order = new Order() { Customer = customer, Products = products };
             var now = DateTime.Now;
             order.ShippingDate = now.AddDays(5);
-
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
             return order;
@@ -84,10 +78,6 @@ namespace Server.Services
             foreach (var prodId in itemsToAdd.ProductIds)
             {
                 var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-                //if (prod is null)
-                //{
-                //    return NotFound();
-                //}
                 products.Add(prod);
             }
             return products;
