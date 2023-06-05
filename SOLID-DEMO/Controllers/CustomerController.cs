@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
 using Server.UnitOfWork;
+using Shared;
 
 namespace Server.Controllers;
 
@@ -36,31 +37,20 @@ public class CustomerController : ControllerBase
         return Ok(data);
     }
 
-
-
-
-
-
-
-
-
-
     //[HttpGet("/customers/{email}")]
-    //public async Task<IActionResult> GetCustomer(string email)
+    //public async Task<IActionResult> GetByEmail(string email)
     //{
-    //    var customer = await _customer.GetCustomerByEmailAsync(email);
-    //    if (customer is null) return NotFound($"No customer found with email: {email}");
-    //    return Ok(customer);
+    //    var data = await _unitOfWork.customerService.GetByEmailAsync(email);
+    //    return Ok(data);
     //}
 
-    //[HttpPost("/customers/register")]
-    //public async Task<IActionResult> RegisterUser(Customer customer)
-    //{
-    //    if (!customer.Name.Contains("@"))
-    //        throw new ValidationException("Email is not an email");
-    //    await _customer.RegisterCustomerAsync(customer);
-    //    return Ok();
-    //}
+    [HttpPost("/customers/create")]
+    public async Task<IActionResult> Create(Customer customer)
+    {
+        var data = await _unitOfWork.customerService.CreateAsync(customer);
+        await _unitOfWork.CompleteAsync();
+        return Ok(data);
+    }
 
     //[HttpPost("/customers/login")]
     //public async Task<IActionResult> LoginCustomer(string email, string password)

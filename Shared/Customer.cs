@@ -1,15 +1,20 @@
-﻿namespace Shared
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Shared
 {
     public class Customer
     {
         public int Id { get; init; }
         public string Name { get; set; }
         public string Password { get; set; }
+
+        //public string Email { get; set; }   
         
         public Customer(string name, string password)
         {
             Name = name;
             Password = password;
+            
         }
     }
 }

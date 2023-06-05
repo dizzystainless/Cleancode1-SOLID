@@ -9,7 +9,8 @@
         {
             Task<List<T>> GetAllAsync();
             Task<T> GetByIdAsync(int id);
-            //void Insert(T obj);
+            //Task<T> GetByEmailAsync(string email);
+            Task<bool> CreateAsync(T entity);
             //void Update(T obj);
             //void Delete(T obj);
         }

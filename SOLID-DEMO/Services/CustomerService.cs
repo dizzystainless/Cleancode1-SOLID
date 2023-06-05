@@ -22,21 +22,28 @@ namespace Server.Services
         public override async Task<Customer> GetByIdAsync(int id)
         {
             return await DbSet.FirstOrDefaultAsync(c => c.Id == id);
-            //var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
-            //return customer;
         }
 
-        //    public async Task<Customer> GetCustomerByEmailAsync(string email)
-        //    {
-        //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email));
-        //        return customer;
-        //    }
+        //public async Task<Customer> GetByEmailAsync(string email)
+        //{
+        //    return await DbSet.FirstOrDefaultAsync(c => c.Email == mail);
+        //}
 
-        //    public async Task RegisterCustomerAsync(Customer customer)
-        //    {
-        //        await _context.AddAsync(customer);
-        //        await _context.SaveChangesAsync();
-        //    }
+        public override async Task<bool> CreateAsync(Customer customer)
+        {
+            try
+            {
+                await DbSet.AddAsync(customer);
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            //await _context.AddAsync(customer);
+            //await _context.SaveChangesAsync();
+        }
 
         //    public async Task<Customer> LoginCustomerAsync(string email, string password)
         //    {

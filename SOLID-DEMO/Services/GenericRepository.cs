@@ -27,7 +27,12 @@ namespace Server.Services
             throw new NotImplementedException();
         }
 
-        public void Insert(T obj)
+        //public virtual Task<T> GetByEmailAsync(string email)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public virtual Task<bool> CreateAsync(T entity)
         {
             throw new NotImplementedException();
         }
