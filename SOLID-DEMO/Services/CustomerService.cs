@@ -24,11 +24,6 @@ namespace Server.Services
             return await DbSet.FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        //public async Task<Customer> GetByEmailAsync(string email)
-        //{
-        //    return await DbSet.FirstOrDefaultAsync(c => c.Email == mail);
-        //}
-
         public override async Task<bool> CreateAsync(Customer customer)
         {
             try
@@ -38,23 +33,35 @@ namespace Server.Services
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
-            //await _context.AddAsync(customer);
-            //await _context.SaveChangesAsync();
         }
 
-        //    public async Task<Customer> LoginCustomerAsync(string email, string password)
-        //    {
-        //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email) && c.Password.Equals(password));
-        //        return customer;
-        //    }
+        public override async Task<bool> DeleteAsync(int id)
+        {
+            var existdata = await DbSet.FirstOrDefaultAsync(c => c.Id == id);
+            if (existdata != null)
+            {
+                await DbSet.Remove(existdata);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
 
-        //    public async Task DeleteCustomerAsync(Customer customer)
-        //    {
-        //        _context.Customers.Remove(customer);
-        //        await _context.SaveChangesAsync();
-        //    }
+            ////-------------------------------------------
+            ////Nedan förberett för framtida funktioner
+            //public async Task<Customer> GetByEmailAsync(string email)
+            //{
+            //    return await DbSet.FirstOrDefaultAsync(c => c.Email == mail);
+            //}
+
+            //    public async Task<Customer> LoginCustomerAsync(string email, string password)
+            //    {
+            //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email) && c.Password.Equals(password));
+            //        return customer;
+            //    }
+        }
     }
 }

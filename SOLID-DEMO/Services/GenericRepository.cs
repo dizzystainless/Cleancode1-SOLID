@@ -1,6 +1,5 @@
 ﻿using Server.DataAccess;
 using Microsoft.EntityFrameworkCore;
-
 using static Server.Interfaces.IGenericRepository;
 
 namespace Server.Services
@@ -27,26 +26,22 @@ namespace Server.Services
             throw new NotImplementedException();
         }
 
-        //public virtual Task<T> GetByEmailAsync(string email)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public virtual Task<bool> CreateAsync(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(T obj)
+        public virtual Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(T obj)
-        {
-            throw new NotImplementedException();
-        }
 
-       
+        ////----------------------------------
+        ////Nedan förberett för framtida funktioner
+        /////public virtual Task<T> GetByEmailAsync(string email)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

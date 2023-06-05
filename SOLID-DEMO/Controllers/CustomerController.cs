@@ -37,13 +37,6 @@ public class CustomerController : ControllerBase
         return Ok(data);
     }
 
-    //[HttpGet("/customers/{email}")]
-    //public async Task<IActionResult> GetByEmail(string email)
-    //{
-    //    var data = await _unitOfWork.customerService.GetByEmailAsync(email);
-    //    return Ok(data);
-    //}
-
     [HttpPost("/customers/create")]
     public async Task<IActionResult> Create(Customer customer)
     {
@@ -51,6 +44,23 @@ public class CustomerController : ControllerBase
         await _unitOfWork.CompleteAsync();
         return Ok(data);
     }
+
+    [HttpDelete("/customers/delete/{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var data = await _unitOfWork.customerService.DeleteAsync(id);
+        await _unitOfWork.CompleteAsync();
+        return Ok(data);
+    }
+
+    ////------------------------------------------------
+    ////Nedan förberett för framtida funktioner
+    //[HttpGet("/customers/{email}")]
+    //public async Task<IActionResult> GetByEmail(string email)
+    //{
+    //    var data = await _unitOfWork.customerService.GetByEmailAsync(email);
+    //    return Ok(data);
+    //}
 
     //[HttpPost("/customers/login")]
     //public async Task<IActionResult> LoginCustomer(string email, string password)
@@ -61,14 +71,5 @@ public class CustomerController : ControllerBase
     //        return Ok();
     //    }
     //    return BadRequest();
-    //}
-
-    //[HttpDelete("/customers/delete/{id}")]
-    //public async Task<IActionResult> DeleteCustomer(int id)
-    //{
-    //    var customer = await _customer.GetCustomerByIdAsync(id); ;
-    //    if (customer is null) return BadRequest();
-    //    await _customer.DeleteCustomerAsync(customer);
-    //    return Ok();
     //}
 }
