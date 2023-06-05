@@ -42,7 +42,7 @@ namespace Server.Services
             var existdata = await DbSet.FirstOrDefaultAsync(c => c.Id == id);
             if (existdata != null)
             {
-                await DbSet.Remove(existdata);
+                DbSet.Remove(existdata);
                 return true;
             }
             else
