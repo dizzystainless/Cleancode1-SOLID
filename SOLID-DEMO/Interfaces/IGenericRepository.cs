@@ -7,11 +7,11 @@
         //The constraint is T which is going to be a class
         public interface IGenericRepository<T> where T : class
         {
-            IEnumerable<T> GetAll();
-            T GetById(object id);
-            void Insert(T obj);
-            void Update(T obj);
-            void Delete(T obj);
+            Task<List<T>> GetAllAsync();
+            Task<T> GetByIdAsync(int id);
+            //void Insert(T obj);
+            //void Update(T obj);
+            //void Delete(T obj);
         }
     }
 }

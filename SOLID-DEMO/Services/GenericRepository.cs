@@ -1,7 +1,6 @@
 ﻿using Server.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Server.Interfaces;
-using Server.Services;
+
 using static Server.Interfaces.IGenericRepository;
 
 namespace Server.Services
@@ -23,7 +22,7 @@ namespace Server.Services
             return this.DbSet.ToListAsync();
         }
 
-        public T GetById(object id)
+        public virtual Task<T> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }

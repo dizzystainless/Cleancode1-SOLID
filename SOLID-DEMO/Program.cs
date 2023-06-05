@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Server.DataAccess;
 using Server.Interfaces;
 using Server.Services;
+using Server.UnitOfWork;
 using Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<ICustomerService, CustomerService>();
+//builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<ShopContext>(options =>
 {

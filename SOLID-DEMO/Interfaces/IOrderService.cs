@@ -2,7 +2,7 @@
 
 namespace Server.Interfaces
 {
-    public interface IOrder
+    public interface IOrderService
     {
         public Task<List<Order>> GetAllOrdersAsync();
         public Task<Order> GetOrderByIdAsync(int id);

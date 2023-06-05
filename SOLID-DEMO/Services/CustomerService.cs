@@ -19,34 +19,35 @@ namespace Server.Services
             return await base.GetAllAsync();
         }
 
-        public async Task<Customer> GetCustomerByEmailAsync(string email)
+        public override async Task<Customer> GetByIdAsync(int id)
         {
-            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email));
-            return customer;
+            return await DbSet.FirstOrDefaultAsync(c => c.Id == id);
+            //var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+            //return customer;
         }
 
-        public async Task<Customer> GetCustomerByIdAsync(int id)
-        {
-            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id == id);
-            return customer;
-        }
+        //    public async Task<Customer> GetCustomerByEmailAsync(string email)
+        //    {
+        //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email));
+        //        return customer;
+        //    }
 
-        public async Task RegisterCustomerAsync(Customer customer)
-        {
-            await _context.AddAsync(customer);
-            await _context.SaveChangesAsync();
-        }
+        //    public async Task RegisterCustomerAsync(Customer customer)
+        //    {
+        //        await _context.AddAsync(customer);
+        //        await _context.SaveChangesAsync();
+        //    }
 
-        public async Task<Customer> LoginCustomerAsync(string email, string password)
-        {
-            var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email) && c.Password.Equals(password));
-            return customer;
-        }
+        //    public async Task<Customer> LoginCustomerAsync(string email, string password)
+        //    {
+        //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Name.Equals(email) && c.Password.Equals(password));
+        //        return customer;
+        //    }
 
-        public async Task DeleteCustomerAsync(Customer customer)
-        {
-            _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
-        }
+        //    public async Task DeleteCustomerAsync(Customer customer)
+        //    {
+        //        _context.Customers.Remove(customer);
+        //        await _context.SaveChangesAsync();
+        //    }
     }
 }
