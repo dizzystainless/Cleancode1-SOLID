@@ -2,7 +2,7 @@
 
 namespace Server.Interfaces
 {
-    public interface ICustomer<T> where T : class
+    public interface ICustomer
     {
         Task<List<Customer>> GetAllCustomersAsync();
         Task<Customer> GetCustomerByEmailAsync(string email);
