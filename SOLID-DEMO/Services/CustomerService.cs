@@ -5,19 +5,18 @@ using Shared;
 
 namespace Server.Services
 {
-    public class CustomerService : ICustomerService
+    public class CustomerService : GenericRepository<Customer>, ICustomerService
     {
-        private readonly ShopContext _context;
+        //private readonly ShopContext _context;
 
-        public CustomerService(ShopContext context)
+        public CustomerService(ShopContext _context) : base(_context)
         {
-            _context = context;
+            
         }
 
-        public async Task<List<Customer>> GetAllCustomersAsync()
+        public override async Task <List<Customer>> GetAllAsync()
         {
-            var customers = await _context.Customers.ToListAsync();
-            return customers;
+            return await base.GetAllAsync();
         }
 
         public async Task<Customer> GetCustomerByEmailAsync(string email)
