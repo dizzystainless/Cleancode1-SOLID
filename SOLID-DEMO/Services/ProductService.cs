@@ -6,7 +6,7 @@ using Shared;
 
 namespace Server.Services
 {
-    public class ProductService : IProduct
+    public class ProductService : IProductService
     {
         private readonly ShopContext _context;
 

@@ -12,9 +12,9 @@ namespace Server.Controllers;
 [Route("/api")]
 public class CustomerController : ControllerBase
 {
-    private readonly ICustomer _customer;
+    private readonly ICustomerService _customer;
 
-    public CustomerController(ICustomer customer)
+    public CustomerController(ICustomerService customer)
     {
         _customer = customer;
     }

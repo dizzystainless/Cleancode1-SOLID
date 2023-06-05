@@ -6,9 +6,9 @@ namespace Server.Controllers
 {
     public class ProductController : ControllerBase
     {
-        private readonly IProduct _product;
+        private readonly IProductService _product;
      
-        public ProductController(IProduct product)
+        public ProductController(IProductService product)
         {
             _product = product;
         }

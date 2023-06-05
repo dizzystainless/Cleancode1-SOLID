@@ -6,8 +6,8 @@ namespace Server.Controllers
 {
     public class OrderController : ControllerBase
     {
-        private readonly IOrder _order;
-        public OrderController(IOrder order)
+        private readonly IOrderService _order;
+        public OrderController(IOrderService order)
         {
             _order = order;
         }
