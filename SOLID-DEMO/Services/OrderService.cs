@@ -31,9 +31,9 @@ namespace Server.Services
             //return order;
         }
 
-        public async Task<List<Order>> GetAllByIdAsync(int id)
+        public async Task<List<Order>> GetAllByIdAsync(int customerId)
         {
-            return await DbSet.Include(o => o.Customer).Where(c => c.Customer.Id == id).Include(o => o.Products).ToListAsync();
+            return await DbSet.Include(o => o.Customer).Where(c => c.Customer.Id == customerId).Include(o => o.Products).ToListAsync();
             //var orders = await context.Orders.Include(o => o.Customer).Where(c => c.Customer.Id == id).Include(o => o.Products).ToListAsync();
             //return orders;
         }
@@ -72,55 +72,63 @@ namespace Server.Services
         //        return order;
         //    }
 
-        //    public async Task CancelOrderAsync(Order order)
-        //    {
-        //        _context.Orders.Remove(order);
-        //        await _context.SaveChangesAsync();
-        //    }
+        public override async Task<bool> DeleteAsync(int id)
+        {
+            var existdata = await DbSet.FirstOrDefaultAsync(c => c.Id == id);
+            if (existdata != null)
+            {
+                DbSet.Remove(existdata);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-        //    public async Task<Customer> GetCustomerForItemsToAddAsync(CustomerCart itemsToAdd, int id)
-        //    {
-        //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
-        //        return customer;
-        //    }
+            //    public async Task<Customer> GetCustomerForItemsToAddAsync(CustomerCart itemsToAdd, int id)
+            //    {
+            //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToAdd.CustomerId));
+            //        return customer;
+            //    }
 
-        //    public async Task<List<Product>> GetItemsToAddAsync(CustomerCart itemsToAdd)
-        //    {
-        //        var products = new List<Product>();
+            //    public async Task<List<Product>> GetItemsToAddAsync(CustomerCart itemsToAdd)
+            //    {
+            //        var products = new List<Product>();
 
-        //        foreach (var prodId in itemsToAdd.ProductIds)
-        //        {
-        //            var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
-        //            products.Add(prod);
-        //        }
-        //        return products;
-        //    }
+            //        foreach (var prodId in itemsToAdd.ProductIds)
+            //        {
+            //            var prod = await _context.Products.FirstOrDefaultAsync(p => p.Id == prodId);
+            //            products.Add(prod);
+            //        }
+            //        return products;
+            //    }
 
-        //    public async Task AddToOrderAsync(Order order, List<Product> products)
-        //    {
-        //        order.ShippingDate = DateTime.Now.AddDays(5);
-        //        order.Products.AddRange(products);
-        //        await _context.SaveChangesAsync();
-        //    }
+            //    public async Task AddToOrderAsync(Order order, List<Product> products)
+            //    {
+            //        order.ShippingDate = DateTime.Now.AddDays(5);
+            //        order.Products.AddRange(products);
+            //        await _context.SaveChangesAsync();
+            //    }
 
-        //    public async Task<Customer> GetCustomerForItemsToRemoveAsync (CustomerCart itemsToRemove, int id)
-        //    {
-        //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
-        //        return customer;
-        //    }
+            //    public async Task<Customer> GetCustomerForItemsToRemoveAsync (CustomerCart itemsToRemove, int id)
+            //    {
+            //        var customer = await _context.Customers.FirstOrDefaultAsync(c => c.Id.Equals(itemsToRemove.CustomerId));
+            //        return customer;
+            //    }
 
-        //    public async Task RemoveFromOrderAsync(CustomerCart itemsToRemove, Order order)
-        //    {
-        //        foreach (var prodId in itemsToRemove.ProductIds)
-        //        {
-        //            var prod = order.Products.FirstOrDefault(p => p.Id == prodId);
-        //            if (prod is null)
-        //            {
-        //                continue;
-        //            }
-        //            order.Products.Remove(prod);
-        //        }
-        //        await _context.SaveChangesAsync();
-        //    }
-    }
+            //    public async Task RemoveFromOrderAsync(CustomerCart itemsToRemove, Order order)
+            //    {
+            //        foreach (var prodId in itemsToRemove.ProductIds)
+            //        {
+            //            var prod = order.Products.FirstOrDefault(p => p.Id == prodId);
+            //            if (prod is null)
+            //            {
+            //                continue;
+            //            }
+            //            order.Products.Remove(prod);
+            //        }
+            //        await _context.SaveChangesAsync();
+            //    }
+        }
 }

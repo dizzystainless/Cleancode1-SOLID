@@ -7,7 +7,7 @@ namespace Server.Interfaces
     {
         public Task<List<Order>> GetAllAsync();
         public Task<Order> GetByIdAsync(int id);
-        public Task<List<Order>> GetAllByIdAsync(int id);
+        public Task<List<Order>> GetAllByIdAsync(int customerId);
 
         //samma som getbyIdasync?
         //public Task<Order> GetOrderByCustomerAsync(int id);
@@ -15,7 +15,7 @@ namespace Server.Interfaces
         //public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
         //public Task<List<Product>> AddToCartAsync(CustomerCart cart);
         //public Task<Order> CreateOrderAsync(Order order);    
-        //public Task CancelOrderAsync(Order order);
+        Task<bool> DeleteAsync(int id);
 
         ////Add to order
         //public Task<Customer> GetCustomerForItemsToAddAsync(CustomerCart itemsToAdd, int id);

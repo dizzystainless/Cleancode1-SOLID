@@ -20,10 +20,17 @@ namespace Server.Controllers
             return Ok(data);
         }
 
-        [HttpGet("/orders/customer/{id}")]
+        [HttpGet("/orders/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var data = await _unitOfWork.orderService.GetByIdAsync(id);
+            return Ok(data);
+        }
+
+        [HttpGet("/orders/customer/")]
+        public async Task<IActionResult> GetAllById(int customerid)
+        {
+            var data = await _unitOfWork.orderService.GetAllByIdAsync(customerid);
             return Ok(data);
         }
 
@@ -42,18 +49,13 @@ namespace Server.Controllers
         //    return Ok();
         //}
 
-        //[HttpDelete("/orders/{id}")]
-        //public async Task<IActionResult> CancelOrder(int id)
-        //{
-        //    var order = await _order.GetOrderByIdAsync(id);
-
-        //    if (order is null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    await _order.CancelOrderAsync(order);
-        //    return Ok();
-        //}
+        [HttpDelete("/orders/delete/{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var data = await _unitOfWork.orderService.DeleteAsync(id);
+            await _unitOfWork.CompleteAsync();
+            return Ok(data);
+        }
 
         //[HttpPatch("order/add/{id}")]
         //public async Task<IActionResult> AddToOrder(CustomerCart itemsToAdd, int id)

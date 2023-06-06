@@ -26,6 +26,11 @@ namespace Server.Services
             throw new NotImplementedException();
         }
 
+        public virtual Task<List<T>> GetAllByIdAsync(int customerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual Task<bool> CreateAsync(T entity)
         {
             throw new NotImplementedException();
