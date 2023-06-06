@@ -10,13 +10,6 @@ namespace Server.Controllers;
 [Route("/api")]
 public class CustomerController : ControllerBase
 {
-    //private readonly ICustomerService _customer;
-
-    //public CustomerController(ICustomerService customer)
-    //{
-    //    _customer = customer;
-    //}
-
     private readonly IUnitOfWork _unitOfWork;
     public CustomerController(IUnitOfWork work)
     {

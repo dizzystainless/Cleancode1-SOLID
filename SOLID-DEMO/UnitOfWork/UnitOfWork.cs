@@ -9,12 +9,15 @@ namespace Server.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         public ICustomerService customerService { get; set; }
+        public IOrderService orderService { get; set; }
+
         private readonly ShopContext _context;
 
         public UnitOfWork(ShopContext context)
         {
             _context = context;
             customerService = new CustomerService(context);
+            orderService = new OrderService(context);
         }
 
         public async Task CompleteAsync()

@@ -6,6 +6,7 @@ namespace Server.UnitOfWork
     public interface IUnitOfWork
     {
         ICustomerService customerService { get; }
+        IOrderService orderService { get; }
 
         Task CompleteAsync();
 
