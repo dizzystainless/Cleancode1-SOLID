@@ -6,7 +6,7 @@ using Shared;
 
 namespace Server.Services
 {
-    public class ProductService : GenericRepository<Order>, IProductService
+    public class ProductService : GenericRepository<Product>, IProductService
     {
         //private readonly ShopContext _context;
 
@@ -15,29 +15,48 @@ namespace Server.Services
 
         }
 
-        //public async Task<List<Product>> GetAllProductsAsync()
-        //{
-        //    var products = await _context.Products.ToListAsync();
-        //    return products;
-        //}
+        public override async Task<List<Product>> GetAllAsync()
+        {
+            return await base.GetAllAsync();
+        }
 
-        //public async Task<Product> GetProductByIdAsync(int id)
-        //{
-        //    var product = await _context.Products.FirstOrDefaultAsync(c => c.Id == id);
-        //    return product;
-        //}
+        public override async Task<Product> GetByIdAsync(int id)
+        {
+            return await DbSet.FirstOrDefaultAsync(c => c.Id == id);
 
-        //public async Task<Product> GetNewProductByNameAsync(Product newProd)
-        //{
-        //    //Döpa om till newProduct?
-        //    var prod = await _context.Products.FirstOrDefaultAsync(p => p.Name.Equals(newProd.Name));
-        //    return prod;
-        //}
+        }
 
-        //public async Task AddProductAsync(Product newProd)
-        //{
-        //    await _context.Products.AddAsync(newProd);
-        //    await _context.SaveChangesAsync();
-        //}
+        public async Task<Product> GetByNameAsync(Product newProd)
+        {
+            var prod = await DbSet.FirstOrDefaultAsync(p => p.Name.Equals(newProd.Name));
+            return prod;
+        }
+
+        public override async Task<bool> CreateAsync(Product product)
+        {
+            try
+            {
+                await DbSet.AddAsync(product);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public override async Task<bool> DeleteAsync(int id)
+        {
+            var existdata = await DbSet.FirstOrDefaultAsync(c => c.Id == id);
+            if (existdata != null)
+            {
+                DbSet.Remove(existdata);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

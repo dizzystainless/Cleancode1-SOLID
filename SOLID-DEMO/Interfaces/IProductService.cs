@@ -5,9 +5,10 @@ namespace Server.Interfaces
 {
     public interface IProductService : IGenericRepository<Product>
     {
-        //Task<List<Product>> GetAllProductsAsync();
-        //Task<Product> GetProductByIdAsync(int id);
-        //Task<Product> GetNewProductByNameAsync(Product newProd);
-        //Task AddProductAsync(Product newProd);
+        Task<List<Product>> GetAllAsync();
+        Task<Product> GetByIdAsync(int id);
+        Task<Product> GetByNameAsync(Product newProd);
+        Task<bool> CreateAsync(Product product);
+        Task<bool> DeleteAsync(int id);
     }
 }
