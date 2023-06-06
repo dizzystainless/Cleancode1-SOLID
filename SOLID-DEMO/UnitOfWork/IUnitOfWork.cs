@@ -7,6 +7,7 @@ namespace Server.UnitOfWork
     {
         ICustomerService customerService { get; }
         IOrderService orderService { get; }
+        IProductService productService { get; }
 
         Task CompleteAsync();
 

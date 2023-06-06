@@ -10,6 +10,7 @@ namespace Server.UnitOfWork
     {
         public ICustomerService customerService { get; set; }
         public IOrderService orderService { get; set; }
+        public IProductService productService { get; set; }
 
         private readonly ShopContext _context;
 
@@ -18,6 +19,7 @@ namespace Server.UnitOfWork
             _context = context;
             customerService = new CustomerService(context);
             orderService = new OrderService(context);
+            productService = new ProductService(context);
         }
 
         public async Task CompleteAsync()

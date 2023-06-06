@@ -12,7 +12,7 @@ namespace Server.Interfaces
         //samma som getbyIdasync?
         //public Task<Order> GetOrderByCustomerAsync(int id);
 
-        public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
+        //public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
         //public Task<List<Product>> AddToCartAsync(CustomerCart cart);
         //public Task<Order> CreateOrderAsync(Order order);    
         //public Task CancelOrderAsync(Order order);
