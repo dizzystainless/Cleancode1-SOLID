@@ -8,8 +8,11 @@ namespace Server.Interfaces
         public Task<List<Order>> GetAllAsync();
         public Task<Order> GetByIdAsync(int id);
         public Task<List<Order>> GetAllByIdAsync(int id);
+
+        //samma som getbyIdasync?
         //public Task<Order> GetOrderByCustomerAsync(int id);
-        //public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
+
+        public Task<Customer> GetCustomerCartAsync(CustomerCart cart);
         //public Task<List<Product>> AddToCartAsync(CustomerCart cart);
         //public Task<Order> CreateOrderAsync(Order order);    
         //public Task CancelOrderAsync(Order order);

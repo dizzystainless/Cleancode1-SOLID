@@ -25,7 +25,8 @@ namespace Server.Services
 
         public override async Task<Order> GetByIdAsync(int id)
         {
-            return await DbSet.FirstOrDefaultAsync(c => c.Id == id);
+             return await DbSet.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+            
             //var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
             //return order;
         }
@@ -37,11 +38,12 @@ namespace Server.Services
             //return orders;
         }
 
-        //    public async Task<Order> GetOrderByCustomerAsync(int id)
-        //    {
-        //        var order = await _context.Orders.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
-        //        return order;
-        //    }
+        //samma som getbyidasync?
+        //public async Task<Order> GetOrderByCustomerAsync(int id)
+        //{
+        //    var order = await DbSet.Include(o => o.Customer).Include(o => o.Products).FirstOrDefaultAsync(o => o.Id == id);
+        //    return order;
+        //}
 
         //    public async Task<Customer> GetCustomerCartAsync(CustomerCart cart)
         //    {
