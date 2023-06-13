@@ -84,7 +84,7 @@ namespace Server.Services
             {
                 return false;
             }
-        }
+            }
 
             //    public async Task<Customer> GetCustomerForItemsToAddAsync(CustomerCart itemsToAdd, int id)
             //    {
