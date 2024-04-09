@@ -24,7 +24,7 @@ public class CustomerController : ControllerBase
     }
 
     [HttpGet("customers/{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(int id) 
     {
         var data = await _unitOfWork.customerService.GetByIdAsync(id);
         return Ok(data);
